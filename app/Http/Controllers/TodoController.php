@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Exports\TodosExport;
 use App\Models\Todo;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Services\Parser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class TodoController extends Controller
 {
@@ -58,5 +57,24 @@ class TodoController extends Controller
     public function download()
     {
         return Excel::download(new TodosExport, 'todos.csv');
+    }
+
+    public function search(Request $request)
+    {
+        if (!$request->exists('query')) {
+            return response()->json([
+                'result' => '400 Bad Request',
+                'message' => ['The query field is required.']
+            ], 400);
+        }
+        return Todo::search($this->parseSearchQuery($request->get('query')))->get();
+    }
+
+    private function parseSearchQuery($string)
+    {
+        return str_replace(
+            ['equals', 'eq', 'neq'],
+            ['=', '=', '!='],
+            $string);
     }
 }

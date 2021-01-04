@@ -10,4 +10,9 @@ class Todo extends Model
     use HasFactory;
     public $timestamps = false;
     protected $fillable = ['id', 'user_id', 'title', 'completed'];
+
+    public function scopeSearch($query, $needle)
+    {
+        return $query->whereRaw($needle);
+    }
 }

@@ -20,4 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('todos/download', [TodoController::class, 'download'])->name('todos.download');
+Route::get('todos/search', [TodoController::class, 'search'])->name('todos.search');
 Route::apiResource('todos', TodoController::class);
