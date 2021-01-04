@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TodosExport;
 use App\Models\Todo;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class TodoController extends Controller
@@ -51,5 +53,10 @@ class TodoController extends Controller
         return response()->json([
             'result' => '200 Successful'
         ]);
+    }
+
+    public function download()
+    {
+        return Excel::download(new TodosExport, 'todos.csv');
     }
 }
