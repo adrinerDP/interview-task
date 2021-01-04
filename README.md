@@ -53,3 +53,14 @@
         - ex) title LIKE 'kevin%' AND completed neq true
             - neq: not equal (!=)
     - 조건에 만족하는 결과가 없다면 에러를 반환합니다.
+
+### API Document
+| Method | URI | Description |
+| --- | --- | --- |
+| GET | api/todos | Fetch all todo items |
+| POST | api/todos | Insert a new todo item (JSON Payload) |
+| GET | api/todos/download | Download all todo items as csv file |
+| GET | api/todos/search?query | Search todo items matches with the given query |
+| GET | api/todos/{id} | Get a specific todo item with id |
+| PUT | api/todos/{id} | Update a specific todo item with id (JSON Payload) |
+| DELETE | api/todos/{id} | Destroy a specific todo item irreversibly |
